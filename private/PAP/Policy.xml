@@ -3,7 +3,7 @@
 	xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	PolicyId="Accesso" 
-	RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides" 
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:permit-unless-deny" 
 	Version="1.0">
 	<Target>
 		<!-- policy applicabile alle richieste con nome utente che trova riscontro -->
@@ -57,10 +57,17 @@
 								<AttributeDesignator
 									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
 									AttributeId="orario"
-									MustBePresent="false"
+									MustBePresent="true"
 									DataType="http://www.w3.org/2001/XMLSchema#string"/>
 							</Apply>
 						</Apply>
+						<!--<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+							<AttributeDesignator
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
+								AttributeId="orario"
+								MustBePresent="true"
+								DataType="http://www.w3.org/2001/XMLSchema#time"/>
+						</Apply>-->
 					</Apply>
 					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-less-than">
 						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">18:00:00</AttributeValue>
@@ -69,10 +76,17 @@
 								<AttributeDesignator
 									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
 									AttributeId="orario"
-									MustBePresent="false"
+									MustBePresent="true"
 									DataType="http://www.w3.org/2001/XMLSchema#string"/>
 							</Apply>
 						</Apply>
+						<!--<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+							<AttributeDesignator
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
+								AttributeId="orario"
+								MustBePresent="true"
+								DataType="http://www.w3.org/2001/XMLSchema#time"/>
+						</Apply>-->
 					</Apply>
 				</Apply>
 			</Apply>
@@ -98,29 +112,270 @@
 			</Apply>
 		</Condition>
 	</Rule>
-	<Rule Effect="Permit" RueId="Lettura dei propri dati">
+	<Rule Effect="Deny" RuleId="Chiunque legge altro pari grado">
 		<Target>
-			<!-- action==read -->
+			<!-- azione==read -->
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Read</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="azione" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+				</AllOf>
+			</AnyOf>
 		</Target>
 		<Condition>
-			<!-- soggetto==nome_risorsa -->
+			<!-- ruolo_soggetto==ruolo_risorsa /\ id_soggetto!=id_risorsa -->
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="ruolo_soggetto" 
+							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="ruolo_risorsa" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+				</Apply>
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+							<AttributeDesignator 
+								AttributeId="id_soggetto" 
+								Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+								DataType="http://www.w3.org/2001/XMLSchema#string" 
+								MustBePresent="true"/>
+						</Apply>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+							<AttributeDesignator 
+								AttributeId="id_risorsa" 
+								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" 
+								DataType="http://www.w3.org/2001/XMLSchema#string" 
+								MustBePresent="true"/>
+						</Apply>
+					</Apply>
+				</Apply>
+			</Apply>
 		</Condition>
 	</Rule>
-	<Rule Effect="Deny" RuleId="Dipendente legge dati altrui">
-		<Target>
-			<!-- action==read -->
-		</Target>
-		<Condition>
-			<!-- ruolo-soggetto==dipendente /\ soggetto!=nome_risorsa -->
-		</Condition>
-	</Rule>
-	<Rule Effect="Deny" RuleId="Manager legge dati di altro gruppo">
+	<Rule Effect="Deny" RuleId="Manager legge altro gruppo">
 		<Target>
 			<!-- action==read /\ ruolo_soggetto==manager -->
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Read</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="azione" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Manager</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="ruolo_soggetto" 
+							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+				</AllOf>
+			</AnyOf>
 		</Target>
 		<Condition>
-			<!-- gruppo soggetto!=gruppo_risorsa -->
+			<!-- gruppo_soggetto!=gruppo_risorsa -->
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="gruppo_soggetto" 
+							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="gruppo_risorsa" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+				</Apply>
+			</Apply>
 		</Condition>
 	</Rule>
-	
+	<Rule Effect="Deny" RuleId="Manager legge direttore">
+		<Target>
+			<!-- action==read /\ ruolo_soggetto==manager /\ ruolo_risorsa==direttore -->
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Read</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="azione" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Manager</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="ruolo_soggetto" 
+							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Direttore</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="ruolo_risorsa" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+	</Rule>
+	<Rule Effect="Deny" RuleId="scrittura di un non direttore">
+		<Target>
+			<!-- action==write -->
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Write</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="azione" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<!-- ruolo_soggetto!=direttore -->
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Direttore</AttributeValue>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="ruolo_soggetto" 
+							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+				</Apply>
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule Effect="Deny" RuleId="Scrittura su direttore">
+		<Target>
+			<!-- action==write /\ ruolo_risorsa==direttore -->
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Write</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="azione" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Direttore</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="ruolo_risorsa" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+	</Rule>
+	<Rule Effect="Deny" RuleId="Scrittura su altro gruppo">
+		<Target>
+			<!-- action==write -->
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Write</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="azione" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<!-- gruppo_soggetto!=gruppo_risorsa -->
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="gruppo_soggetto" 
+							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="gruppo_risorsa" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+				</Apply>
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule Effect="Deny" RuleId="modifica a ribasso">
+		<Target>
+			<!-- action==write -->
+			<AnyOf>
+				<AllOf>
+					<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Write</AttributeValue>
+						<AttributeDesignator 
+							AttributeId="azione" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Match>
+				</AllOf>
+			</AnyOf>
+		</Target>
+		<Condition>
+			<!-- nuovo_valore>valore_risorsa -->
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than"><!-- funziona al contrario -->
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+					<AttributeDesignator 
+						AttributeId="valore_risorsa" 
+						Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" 
+						DataType="http://www.w3.org/2001/XMLSchema#integer" 
+						MustBePresent="true"/>
+				</Apply>
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
+					<AttributeDesignator 
+						AttributeId="nuovo_valore" 
+						Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+						DataType="http://www.w3.org/2001/XMLSchema#integer" 
+						MustBePresent="true"/>
+				</Apply>
+			</Apply>
+		</Condition>
+	</Rule>
 </Policy>
