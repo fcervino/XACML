@@ -2,19 +2,30 @@
 
 <html lang="it">
 	<head>
-		<title>Servizio Nota Spese</title>
+		<title>Portale Stipendi</title>
 		<meta charset="utf-8" />
 	</head>
 	<body>
 		<div id="info">
-			<h1>Benvenuto nel servizio di nota spese</h1>
-			<h2>Come funziona?</h2>
+			<h1>Benvenuto nel portale stipendi</h1>
+			<!--<h2>Come funziona?</h2>-->
 		</div>
 		<div id="parametri">
-			<form method="POST">
+			<form method="POST" action="/visualizza">
 				<h2>Inserire nome e password e specificare l'operazione desiderata</h2>
 				<input name="nome" maxlength="200" placeholder="Nome">
-				<input name="password" maxlength="200" placeholder="Password">
+				<br />
+				<input name="password" type="password" maxlength="200" placeholder="Password">
+				<br />
+				<p>Operazione: </p>
+				<select id="azione" name="azione">
+					<option value="Read">Lettura</option>
+					<option value="Write">Modifica</option>
+				</select>
+				<p>Dei dati di:</p>
+				<input name="nome_risorsa" maxlength="200" placeholder="Nome">
+				<p>Eventuale nuovo importo: €</p><input id="modifica" name="nuovo_valore" type="number">
+				<input type="submit" value="Invia Richiesta">
 			</form>
 		</div>
 	</body>
