@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Policy 
+	xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	PolicyId="Accesso" 
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides" 
+	Version="1.0">
+	<Target>
+		<!-- policy applicabile alle richieste con nome utente che trova riscontro -->
+		<AnyOf>
+			<AllOf>
+				<Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">UtenteOk</AttributeValue>
+					<AttributeDesignator 
+						AttributeId="isOk" 
+						Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+						DataType="http://www.w3.org/2001/XMLSchema#string" 
+						MustBePresent="true"/>
+				</Match>
+			</AllOf>
+		</AnyOf>
+	</Target>
+	<Rule Effect="Deny" RuleId="Controllo_password">
+		<Target/>
+		<Condition>
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+				<!-- la password inserita deve essere corretta-->
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="pass_soggetto" 
+							Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+						<AttributeDesignator 
+							AttributeId="pass_user" 
+							Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" 
+							DataType="http://www.w3.org/2001/XMLSchema#string" 
+							MustBePresent="true"/>
+					</Apply>
+				</Apply>
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule Effect="Deny" RuleId="Controllo_orario">
+		<Target/>
+		<Condition>
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+				<!-- la richiesta deve arrivare in orario lavorativo -->
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-greater-than">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">09:00:00</AttributeValue>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:time-from-string">
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">	
+								<AttributeDesignator
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
+									AttributeId="orario"
+									MustBePresent="false"
+									DataType="http://www.w3.org/2001/XMLSchema#string"/>
+							</Apply>
+						</Apply>
+					</Apply>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-less-than">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">18:00:00</AttributeValue>
+						<Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:time-from-string">
+							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+								<AttributeDesignator
+									Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
+									AttributeId="orario"
+									MustBePresent="false"
+									DataType="http://www.w3.org/2001/XMLSchema#string"/>
+							</Apply>
+						</Apply>
+					</Apply>
+				</Apply>
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule Effect="Deny" RuleId="Controllo_IP">
+		<Target/>
+		<Condition>
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
+				<!-- la richiesta deve arrivare da un indirizzo ip aziendale -->
+				<Apply FunctionId="urn:oasis:names:tc:xacml:2.0:function:ipAddress-regexp-match">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">93\.144.*</AttributeValue>
+					<Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:ipAddress-from-string">
+						<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+							<AttributeDesignator 
+								AttributeId="ip_addr" 
+								Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" 
+								DataType="http://www.w3.org/2001/XMLSchema#string" 
+								MustBePresent="true"/>
+						</Apply>
+					</Apply>
+				</Apply>
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule Effect="Permit" RueId="Lettura dei propri dati">
+		<Target>
+			<!-- action==read -->
+		</Target>
+		<Condition>
+			<!-- soggetto==nome_risorsa -->
+		</Condition>
+	</Rule>
+	<Rule Effect="Deny" RuleId="Dipendente legge dati altrui">
+		<Target>
+			<!-- action==read -->
+		</Target>
+		<Condition>
+			<!-- ruolo-soggetto==dipendente /\ soggetto!=nome_risorsa -->
+		</Condition>
+	</Rule>
+	<Rule Effect="Deny" RuleId="Manager legge dati di altro gruppo">
+		<Target>
+			<!-- action==read /\ ruolo_soggetto==manager -->
+		</Target>
+		<Condition>
+			<!-- gruppo soggetto!=gruppo_risorsa -->
+		</Condition>
+	</Rule>
+	
+</Policy>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Request 
+	ReturnPolicyIdList="false" 
+	CombinedDecision="false" 
+	xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+		<Attribute IncludeInResult="false" AttributeId="isOk">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">UtenteOk</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false" AttributeId="pass_soggetto">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password1</AttributeValue>
+		</Attribute>
+		<Attribute IncludeInResult="false" AttributeId="ip_addr">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">93.144.0.0</AttributeValue>
+		</Attribute>
+	</Attributes>
+	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+		<Attribute IncludeInResult="false" AttributeId="pass_user">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password1</AttributeValue>
+		</Attribute>
+	</Attributes>
+	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment">
+		<Attribute IncludeInResult="false" AttributeId="orario">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">08.00.00</AttributeValue>
+		</Attribute>
+	</Attributes>
+</Request>

@@ -1,0 +1,16 @@
+<Policy PolicyId="visualizzazione" xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides" Version="1.0">
+	<Target>
+		<!--azione: lettura-->
+	</Target>
+	<!--ognuno può visualizzare il proprio cedolino -->
+	<Rule Effect="Permit" RuleId="1">
+		<Condition>
+			<!--<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+					<AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+				</Apply>
+				<AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:1.0:resource-category:access-resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+			</Apply>-->
+		</Condition>
+	</Rule>
+</Policy>
