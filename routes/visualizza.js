@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var XMLWriter = require('xml-writer');
+const {exec} = require('child_process');
 
 var organigramma = '';
 
@@ -33,7 +34,6 @@ router.post('/', function(req, res, next) {
 		res.send('Errore in apertura file');
 	}
 
-
 	//recupero parametri richiesta
 	const soggetto = req.body.nome;
 	const password = req.body.password;
@@ -54,6 +54,20 @@ router.post('/', function(req, res, next) {
 		}
 	}
 
+	//recupero parametri risorsa
+	var id_risorsa = '';
+	var ruolo_risorsa = '';
+	var gruppo_risorsa = '';
+	var valore_risorsa = 0;
+	for(var i=0; i<nimpiegati; i++){
+		if(nome_risorsa.localeCompare(organigramma.impiegati[i].nome)==0){
+			id_risorsa = organigramma.impiegati[i].id;
+			ruolo_risorsa = organigramma.impiegati[i].ruolo;
+			gruppo_risorsa = organigramma.impiegati[i].gruppo;
+			valore_risorsa = organigramma.impiegati[i].stipendio;
+		}
+	}
+
 	//Scrittura file richiesta
 	var xw = new XMLWriter('	');
 	xw.formatting = 'indented';
@@ -65,6 +79,7 @@ router.post('/', function(req, res, next) {
 	xw.writeAttribute('CombinedDecision', 'false');
 	xw.writeAttribute('xmlns', 'urn:oasis:names:tc:xacml:3.0:core:schema:wd-17');
 	xw.writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+		//attributi del soggetto
 		xw.startElement('Attributes');
 		xw.writeAttribute('Category', 'urn:oasis:names:tc:xacml:1.0:subject-category:access-subject');
 			xw.startElement('Attribute');
@@ -80,30 +95,183 @@ router.post('/', function(req, res, next) {
 			xw.writeAttribute('AttributeId', 'pass_soggetto');
 				xw.startElement('AttributeValue');
 				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(password);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'ip_addr');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(ipaddr);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'soggetto');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(soggetto);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'id_soggetto');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(organigramma.impiegati[nimp].id);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'ruolo_soggetto');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(organigramma.impiegati[nimp].ruolo);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'gruppo_soggetto');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(organigramma.impiegati[nimp].gruppo);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'nuovo_valore');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#integer');
+					xw.text(nuovo_valore);
+				xw.endElement();
+			xw.endElement();
+		xw.endElement();
+		//attributi della risorsa
+		xw.startElement('Attributes');
+		xw.writeAttribute('Category', 'urn:oasis:names:tc:xacml:3.0:attribute-category:resource');
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'pass_user');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
 					xw.text(organigramma.impiegati[nimp].password);
 				xw.endElement();
 			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'nome_risorsa');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(nome_risorsa);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'id_risorsa');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(id_risorsa);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'ruolo_risorsa');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(ruolo_risorsa);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'gruppo_risorsa');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(gruppo_risorsa);
+				xw.endElement();
+			xw.endElement();
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'valore_risorsa');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#integer');
+					xw.text(valore_risorsa);
+				xw.endElement();
+			xw.endElement();
+		xw.endElement();
+		//attributi dell'ambiente
+		xw.startElement('Attributes');
+		xw.writeAttribute('Category', 'urn:oasis:names:tc:xacml:3.0:attribute-category:environment');
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'orario');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(time);
+				xw.endElement();
+			xw.endElement();
+		xw.endElement();
+		//azione richiesta
+		xw.startElement('Attributes');
+		xw.writeAttribute('Category', 'urn:oasis:names:tc:xacml:3.0:attribute-category:action');
+			xw.startElement('Attribute');
+			xw.writeAttribute('IncludeInResult', 'false');
+			xw.writeAttribute('AttributeId', 'azione');
+				xw.startElement('AttributeValue');
+				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
+					xw.text(azione);
+				xw.endElement();
 		xw.endElement();
 	xw.endElement();
 	xw.endDocument();
 
 	console.log('Richiesta.xml:\n' + xw.toString());
 
-	//test debug
-	res.send(ipaddr + ' ' + time + ' ' + presente + ' ' + organigramma.impiegati[1].nome);
+	//scrittura Request.xml
+	try {
+		fs.writeFileSync(__dirname+'/../private/Request.xml', xw.toString());
+		console.log('Scrittura richiesta ok');
+	} catch (err) {
+		console.error(err);
+		res.send("Errore nella gestione della richiesta. Prego riprovare");
+	}
 
+	//verifica richiesta
+	var esito = false;
+	exec("cd private;./authzforce-ce-core-pdp-cli-20.1.0.jar pdp.xml Request.xml", (error, stdout, stderr) => {
+		 if (error) {
+			res.send('Errore nella valutazione della richiesta');
+		}
+		if (stderr) {
+			res.send('Errore nella valutazione della richiesta');
+		}
+		console.log('Decisione:\n' + stdout);
+		if(stdout.includes('Permit')){
+			esito = true;
+		}
+	});
+
+	//test
+	//res.send(ipaddr + ' ' + time + ' ' + presente + ' ' + organigramma.impiegati[1].nome);
+
+	if(esito)
+		res.send('Richiesta approvata');
+	if(!esito)
+		res.send('Richiesta non approvata');
 	//reinizializzazione variabili
-	presente = '';
+	//presente = '';
 	//serve?????
 
 	//aggiornamento file organigramma
-	/*try {
-		fs.writeFileSync(__dirname+'/../private/organigramma.json', JSON.stringify(organigramma));
-		console.log('Scrittura file ok');
-	} catch (err) {
-		console.error(err);
-		res.send("Errore nell'aggiornamento del valore. Prego riprovare");
-	}*/
+	if(azione.localCompare('Write')==0 && esito == true){
+		try {
+			fs.writeFileSync(__dirname+'/../private/organigramma.json', JSON.stringify(organigramma));
+			console.log('Scrittura file ok');
+		} catch (err) {
+			console.error(err);
+			res.send("Errore nell'aggiornamento del valore. Prego riprovare");
+		}
+	}
 
 
 	//invio risorsa

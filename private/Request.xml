@@ -1,20 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Request 
-	ReturnPolicyIdList="false" 
-	CombinedDecision="false" 
-	xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
-	<!-- attributi del soggetto -->
+<?xml version="1.0"?>
+<Request ReturnPolicyIdList="false" CombinedDecision="false" xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<Attributes Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
 		<Attribute IncludeInResult="false" AttributeId="isOk">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">UtenteOk</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="pass_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password1</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">passwors1</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="ip_addr">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">93.144.0.0</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">37.159.87.200</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="soggetto">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Alice</AttributeValue>
@@ -23,29 +17,27 @@
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">001</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="ruolo_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Direttore</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Dipendente</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="gruppo_soggetto">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">IT</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="nuovo_valore">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">21000</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer"></AttributeValue>
 		</Attribute>
 	</Attributes>
-
-	<!-- attributi della risorsa -->
 	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
 		<Attribute IncludeInResult="false" AttributeId="pass_user">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password1</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="nome_risorsa">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Bob</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Alice</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="id_risorsa">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">002</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">001</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="ruolo_risorsa">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Manager</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Dipendente</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="gruppo_risorsa">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">IT</AttributeValue>
@@ -54,18 +46,14 @@
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">20000</AttributeValue>
 		</Attribute>
 	</Attributes>
-
-	<!-- attributi dell'ambiente -->
 	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment">
 		<Attribute IncludeInResult="false" AttributeId="orario">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">10.00.00</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">19:12:37</AttributeValue>
 		</Attribute>
-	</Attributes>
-
-	<!-- azione richiesta -->
-	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
-		<Attribute IncludeInResult="false" AttributeId="azione">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Write</AttributeValue>
-		</Attribute>
+		<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+			<Attribute IncludeInResult="false" AttributeId="azione">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Read</AttributeValue>
+			</Attribute>
+		</Attributes>
 	</Attributes>
 </Request>
