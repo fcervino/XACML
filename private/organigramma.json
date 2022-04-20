@@ -1,10 +1,1 @@
-{"impiegati":[
-{"id":"001","nome":"Alice","password":"password1","ruolo":"Dipendente","gruppo":"IT","stipendio":"20000"},
-{"id":"002","nome":"Bob","password":"password2","ruolo":"Manager","gruppo":"IT","stipendio":"30000"},
-{"id":"003","nome":"Charlie","password":"password3","ruolo":"Direttore","gruppo":"IT","stipendio":"40000"},
-{"id":"004","nome":"David","password":"password4","ruolo":"Dipendente","gruppo":"HR","stipendio":"20000"},
-{"id":"005","nome":"Elly","password":"password5","ruolo":"Manager","gruppo":"HR","stipendio":"31000"},
-{"id":"006","nome":"Frank","password":"password6","ruolo":"Direttore","gruppo":"HR","stipendio":"37000"},
-{"id":"007","nome":"George","password":"password7","ruolo":"Dipendente","gruppo":"IT","stipendio":"20500"},
-{"id":"008","nome":"Henry","password":"password8","ruolo":"Dipendente","gruppo":"HR","stipendio":"18000"}
-]}
+{"impiegati":[{"id":"001","nome":"Alice","password":"password1","ruolo":"Dipendente","gruppo":"IT","stipendio":"20000"},{"id":"002","nome":"Bob","password":"password2","ruolo":"Manager","gruppo":"IT","stipendio":"30000"},{"id":"003","nome":"Charlie","password":"password3","ruolo":"Direttore","gruppo":"IT","stipendio":"41500"},{"id":"004","nome":"David","password":"password4","ruolo":"Dipendente","gruppo":"HR","stipendio":"20000"},{"id":"005","nome":"Elly","password":"password5","ruolo":"Manager","gruppo":"HR","stipendio":"31000"},{"id":"006","nome":"Frank","password":"password6","ruolo":"Direttore","gruppo":"HR","stipendio":"37000"},{"id":"007","nome":"George","password":"password7","ruolo":"Dipendente","gruppo":"IT","stipendio":"20500"},{"id":"008","nome":"Henry","password":"password8","ruolo":"Dipendente","gruppo":"HR","stipendio":"18000"}]}

@@ -5,30 +5,30 @@
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">UtenteOk</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="pass_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">passwors1</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password3</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="ip_addr">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">37.159.87.200</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">93.144.0.0</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Alice</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Charlie</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="id_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">001</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">003</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="ruolo_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Dipendente</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Direttore</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="gruppo_soggetto">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">IT</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="nuovo_valore">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer"></AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">21500</AttributeValue>
 		</Attribute>
 	</Attributes>
 	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
 		<Attribute IncludeInResult="false" AttributeId="pass_user">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password1</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password3</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="nome_risorsa">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Alice</AttributeValue>
@@ -48,12 +48,12 @@
 	</Attributes>
 	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment">
 		<Attribute IncludeInResult="false" AttributeId="orario">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">19:12:37</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">17:13:52</AttributeValue>
 		</Attribute>
-		<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
-			<Attribute IncludeInResult="false" AttributeId="azione">
-				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Read</AttributeValue>
-			</Attribute>
-		</Attributes>
+	</Attributes>
+	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+		<Attribute IncludeInResult="false" AttributeId="azione">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Write</AttributeValue>
+		</Attribute>
 	</Attributes>
 </Request>

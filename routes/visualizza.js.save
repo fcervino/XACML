@@ -2,16 +2,13 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var XMLWriter = require('xml-writer');
-var path = require('path');
-//const {exec} = require('child_process');
-const {execSync} = require('child_process');
+const {exec} = require('child_process');
 
 var organigramma = '';
 
 const nimpiegati = 8;
 
 var nimp; //soggetto richiedente
-var risorsa; //indice risorsa
 
 /*var organigramma = JSON.parse('{"impiegati":['+
 '{"id":"001","nome":"Alice","password":"password1","ruolo":"Dipendente","gruppo":"IT","stipendio":"20000"},'+
@@ -58,13 +55,12 @@ router.post('/', function(req, res, next) {
 	}
 
 	//recupero parametri risorsa
-	var id_risorsa = '';
-	var ruolo_risorsa = '';
-	var gruppo_risorsa = '';
-	var valore_risorsa = 0;
+	var id_risorsa;
+	var ruolo_risorsa;
+	var gruppo_risorsa;
+	var valore_risorsa;
 	for(var i=0; i<nimpiegati; i++){
 		if(nome_risorsa.localeCompare(organigramma.impiegati[i].nome)==0){
-			risorsa = i;
 			id_risorsa = organigramma.impiegati[i].id;
 			ruolo_risorsa = organigramma.impiegati[i].ruolo;
 			gruppo_risorsa = organigramma.impiegati[i].gruppo;
@@ -107,7 +103,7 @@ router.post('/', function(req, res, next) {
 			xw.writeAttribute('AttributeId', 'ip_addr');
 				xw.startElement('AttributeValue');
 				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
-					xw.text(/*ipaddr*/'93.144.0.0'/*da togliere!!!!*/);
+					xw.text(ipaddr);
 				xw.endElement();
 			xw.endElement();
 			xw.startElement('Attribute');
@@ -159,7 +155,7 @@ router.post('/', function(req, res, next) {
 			xw.writeAttribute('AttributeId', 'pass_user');
 				xw.startElement('AttributeValue');
 				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
-					xw.text(organigramma.impiegati[nimp].password);
+					xw.text();
 				xw.endElement();
 			xw.endElement();
 			xw.startElement('Attribute');
@@ -213,7 +209,6 @@ router.post('/', function(req, res, next) {
 				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
 					xw.text(time);
 				xw.endElement();
-			xw.endElement();
 		xw.endElement();
 		//azione richiesta
 		xw.startElement('Attributes');
@@ -231,42 +226,28 @@ router.post('/', function(req, res, next) {
 
 	console.log('Richiesta.xml:\n' + xw.toString());
 
-	//scrittura Request.xml
-	try {
-		fs.writeFileSync(__dirname+'/../private/Request.xml', xw.toString());
-		console.log('Scrittura richiesta ok');
-	} catch (err) {
-		console.error(err);
-		res.send("Errore nella gestione della richiesta. Prego riprovare");
-	}
-
 	//verifica richiesta
 	var esito = false;
-	/*execSync("cd private;./authzforce-ce-core-pdp-cli-20.1.0.jar pdp.xml Request.xml 2>/dev/null", (error, stdout, stderr) => {
-		/*if (error) {
+	exec("pwd", (error, stdout, stderr) => {
+		if(error){
 			res.send('Errore nella valutazione della richiesta');
 		}
-		if (stderr) {
+		if(stderr){
 			res.send('Errore nella valutazione della richiesta');
-		}*
-		console.log('Decisione:\n' + stdout);
-		if(stdout.includes('Permit')){
-			esito = true;
 		}
-	});*/
-	esito = execSync("cd private;./authzforce-ce-core-pdp-cli-20.1.0.jar pdp.xml Request.xml 2>/dev/null").includes('Permit');
+		var output = stdout;
+		
+	});
 
-	console.log('Decisione presa');
+	//test debug
+	//res.send(ipaddr + ' ' + time + ' ' + presente + ' ' + organigramma.impiegati[1].nome);
 
 	//reinizializzazione variabili
 	//presente = '';
 	//serve?????
 
 	//aggiornamento file organigramma
-	if(azione.localeCompare('Write')==0 && esito == true){
-		organigramma.impiegati[risorsa].stipendio = nuovo_valore;
-		console.log(nuovo_valore+' in '+ JSON.stringify(organigramma.impiegati[nimp]));
-		console.log('Aggiornamento:\n'+JSON.stringify(organigramma));
+	if(azione.localCompare('Write')==0 && /*permesso ottenuto*/){
 		try {
 			fs.writeFileSync(__dirname+'/../private/organigramma.json', JSON.stringify(organigramma));
 			console.log('Scrittura file ok');
@@ -276,20 +257,9 @@ router.post('/', function(req, res, next) {
 		}
 	}
 
-	if(esito)
-		//creazione e invio risorsa
-		try {
-			fs.writeFileSync(__dirname+'/../private/risorsa.txt', 'Nome: '+nome_risorsa+'\nId: '+id_risorsa+'\nRuolo: '+ruolo_risorsa+'\nGruppo: '+gruppo_risorsa+'\nStipendio: '+organigramma.impiegati[nimp].stipendio);
-			console.log('Creazione risorsa ok');
-		} catch (err) {
-			console.error(err);
-			res.send("Errore nella creazione della risorsa da restituire. Prego riprovare");
-		}
-		res.sendFile(path.resolve(__dirname+'/../private/risorsa.txt'));
 
-	if(!esito)
-		res.send('Accesso negato - operazione non effettuabile con gli attributi forniti');
-
+	//invio risorsa
+	//res.sendFile(__dirname + "/index.html");
 });
 
 module.exports = router;

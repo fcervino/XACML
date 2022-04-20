@@ -50,7 +50,7 @@
 			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
 				<!-- la richiesta deve arrivare in orario lavorativo -->
 				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
-					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-greater-than">
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-less-than">
 						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">09:00:00</AttributeValue>
 						<Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:time-from-string">
 							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">	
@@ -69,7 +69,7 @@
 								DataType="http://www.w3.org/2001/XMLSchema#time"/>
 						</Apply>-->
 					</Apply>
-					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-less-than">
+					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-greater-than">
 						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">18:00:00</AttributeValue>
 						<Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:time-from-string">
 							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
@@ -360,7 +360,8 @@
 		</Target>
 		<Condition>
 			<!-- nuovo_valore>valore_risorsa -->
-			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than"><!-- funziona al contrario -->
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than">
+				<!-- funziona al contrario -->
 				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only">
 					<AttributeDesignator 
 						AttributeId="valore_risorsa" 
