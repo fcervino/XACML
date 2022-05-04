@@ -44,7 +44,7 @@ router.post('/', function(req, res, next) {
 	const nome_risorsa = req.body.nome_risorsa;
 	const nuovo_valore = req.body.nuovo_valore;
 
-	var ipaddr = req.ip.substr(7)
+	const ipaddr = req.ip.substr(7)
 
 	var today = new Date();
 	var time = (today.getHours()+2)%24 + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -55,6 +55,9 @@ router.post('/', function(req, res, next) {
 			nimp = i;
 			presente = 'UtenteOk';
 		}
+		//se il nome non è presente nell'organigramma vengono asseganti valori nulli
+		if(presente.localeCompare('UtenteOk')!=0)
+			nimp = nimpiegati;
 	}
 
 	//recupero parametri risorsa
@@ -211,7 +214,7 @@ router.post('/', function(req, res, next) {
 			xw.writeAttribute('AttributeId', 'orario');
 				xw.startElement('AttributeValue');
 				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
-					xw.text(time);
+					xw.text(/*time*/'12:00:00'/*DA TOGLIERE!!!*/);
 				xw.endElement();
 			xw.endElement();
 		xw.endElement();
@@ -279,7 +282,7 @@ router.post('/', function(req, res, next) {
 	if(esito)
 		//creazione e invio risorsa
 		try {
-			fs.writeFileSync(__dirname+'/../private/risorsa.txt', 'Nome: '+nome_risorsa+'\nId: '+id_risorsa+'\nRuolo: '+ruolo_risorsa+'\nGruppo: '+gruppo_risorsa+'\nStipendio: '+organigramma.impiegati[nimp].stipendio);
+			fs.writeFileSync(__dirname+'/../private/risorsa.txt', 'Nome: '+nome_risorsa+'\nId: '+id_risorsa+'\nRuolo: '+ruolo_risorsa+'\nGruppo: '+gruppo_risorsa+'\nStipendio: '+organigramma.impiegati[risorsa].stipendio);
 			console.log('Creazione risorsa ok');
 		} catch (err) {
 			console.error(err);

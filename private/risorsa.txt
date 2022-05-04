@@ -2,4 +2,4 @@ Nome: Alice
 Id: 001
 Ruolo: Dipendente
 Gruppo: IT
-Stipendio: 21500
+Stipendio: 20500

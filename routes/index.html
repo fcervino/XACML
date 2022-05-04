@@ -13,9 +13,9 @@
 		<div id="parametri">
 			<form method="POST" action="/visualizza">
 				<h2>Inserire nome e password e specificare l'operazione desiderata</h2>
-				<input name="nome" maxlength="200" placeholder="Nome">
+				<input name="nome" maxlength="200" placeholder="Nome" required>
 				<br />
-				<input name="password" type="password" maxlength="200" placeholder="Password">
+				<input name="password" maxlength="200" id="plain" placeholder="Password" required>
 				<br />
 				<p>Operazione: </p>
 				<select id="azione" name="azione">
@@ -23,11 +23,25 @@
 					<option value="Write">Modifica</option>
 				</select>
 				<p>Dei dati di:</p>
-				<input name="nome_risorsa" maxlength="200" placeholder="Nome">
+				<input name="nome_risorsa" maxlength="200" placeholder="Nome" required>
 				<p>Eventuale nuovo importo: €</p><input id="modifica" name="nuovo_valore" type="number">
 				<br /><br/>
+				<input onclick="hashpass()" type="button" value="hash">
 				<input type="submit" value="Invia Richiesta">
 			</form>
 		</div>
+		<!--<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js">
+			alert("js ok");
+			function hashpass(){
+				alert("chiamato");
+				var pass = document.getElementById('plain');
+				var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
+				hpass.update(pass.value);
+				var hash = hashObj.getHash("HEX");
+				pass.value = hash;
+				console.log('password hashata');
+			}
+		</script>-->
+		<script src="/"></script>
 	</body>
 </html>
