@@ -33,7 +33,7 @@
 				<input name="nome_risorsa" maxlength="200" placeholder="Nome" required>
 				<p>Eventuale nuovo importo: €</p><input id="modifica" name="nuovo_valore" type="number">
 				<br /><br/>
-				<input onclick="hashpass()" type="button" value="Invia Richiesta">
+				<input onclick="hashpass()" type="submit" value="Invia Richiesta">
 			</form>
 		</div>
 		<hr>
@@ -105,7 +105,7 @@
 				var pass = document.getElementById('plain');
 				var hpass = document.getElementById('hashed');
 				var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
-				hashObj.update(hpass.value);
+				hashObj.update(pass.value);
 				var hash = hashObj.getHash("HEX");
 				hpass.value = hash;
 				console.log(hash);

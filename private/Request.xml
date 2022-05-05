@@ -11,16 +11,16 @@
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">93.144.0.0</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Charlie</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Elly</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="id_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">003</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">005</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="ruolo_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Direttore</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Manager</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="gruppo_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">IT</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">HR</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="nuovo_valore">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer"></AttributeValue>
@@ -28,22 +28,22 @@
 	</Attributes>
 	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
 		<Attribute IncludeInResult="false" AttributeId="pass_user">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">111b55a07597cabe04996109644c0d119175f935c42d254eea56b0b0360fa630ef5f4344512827117f9020dd3d8277ce4efc9ad7dad075d99813ec50896582d2</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">1a33bb15daa9e600dce1cb506148a295a42606192980d17aa197d7d696eb22403b0c75ac94abee3951d3ac799771e3553298a0498100902adcb6d778c73b2b23</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="nome_risorsa">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Bob</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Henry</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="id_risorsa">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">002</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">008</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="ruolo_risorsa">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Manager</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Dipendente</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="gruppo_risorsa">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">IT</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">HR</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="valore_risorsa">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">30000</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">18000</AttributeValue>
 		</Attribute>
 	</Attributes>
 	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment">
