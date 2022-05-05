@@ -1,5 +1,5 @@
-Nome: Alice
-Id: 001
-Ruolo: Dipendente
+Nome: Bob
+Id: 002
+Ruolo: Manager
 Gruppo: IT
-Stipendio: 20500
+Stipendio: 30000

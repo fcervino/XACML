@@ -4,6 +4,12 @@
 	<head>
 		<title>Portale Stipendi</title>
 		<meta charset="utf-8" />
+		<style>
+			table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="info">
@@ -27,8 +33,71 @@
 				<input name="nome_risorsa" maxlength="200" placeholder="Nome" required>
 				<p>Eventuale nuovo importo: €</p><input id="modifica" name="nuovo_valore" type="number">
 				<br /><br/>
-				<input onclick="hashpass()" type="submit" value="Invia Richiesta">
+				<input onclick="hashpass()" type="button" value="Invia Richiesta">
 			</form>
+		</div>
+		<hr>
+		<br>
+		<button onclick="mostra()">Mostra organigramma</button>
+		<br>
+		<br>
+		<div id="organigramma" style="display: none;">
+			<table style="border: 1px solid black;">
+				<tr>
+					<th>Nome</th>
+					<th>Password</th>
+					<th>Ruolo</th>
+					<th>Gruppo</th>
+				</tr>
+				<tr>
+					<td>Alice</td>
+					<td>password1</td>
+					<td>Dipendente</td>
+					<td>IT</td>
+				</tr>
+				<tr>
+					<td>Bob</td>
+					<td>password2</td>
+					<td>Manager</td>
+					<td>IT</td>
+				</tr>
+				<tr>
+					<td>Charlie</td>
+					<td>password3</td>
+					<td>Direttore</td>
+					<td>IT</td>
+				</tr>
+				<tr>
+					<td>David</td>
+					<td>password4</td>
+					<td>Dipendente</td>
+					<td>HR</td>
+				</tr>
+				<tr>
+					<td>Elly</td>
+					<td>password5</td>
+					<td>Manager</td>
+					<td>HR</td>
+				</tr>
+				<tr>
+					<td>Frank</td>
+					<td>password6</td>
+					<td>Direttore</td>
+					<td>HR</td>
+				</tr>
+				<tr>
+					<td>George</td>
+					<td>password7</td>
+					<td>Dipendente</td>
+					<td>IT</td>
+				</tr>
+				<tr>
+					<td>Henry</td>
+					<td>password8</td>
+					<td>Dipendente</td>
+					<td>HR</td>
+				</tr>
+			</table>
 		</div>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
 		<script>
@@ -39,6 +108,19 @@
 				hashObj.update(hpass.value);
 				var hash = hashObj.getHash("HEX");
 				hpass.value = hash;
+				console.log(hash);
+			}
+
+			var stato = 0;
+			function mostra(){
+				if (stato%2 == 0) {
+					document.getElementById("organigramma").style.display="block";
+					stato ++;
+				}
+				else {
+					document.getElementById("organigramma").style.display="none";
+					stato ++;
+				}
 			}
 		</script>
 	</body>
