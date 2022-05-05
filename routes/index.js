@@ -9,6 +9,3 @@ router.get('/', function(req, res, next) {
 
 module.exports = router;
 
-function hashpass(){
-	alert('chiamata ok');
-}

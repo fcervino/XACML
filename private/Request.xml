@@ -5,7 +5,7 @@
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">UtenteOk</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="pass_soggetto">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Ciao</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="ip_addr">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">93.144.0.0</AttributeValue>
@@ -28,7 +28,7 @@
 	</Attributes>
 	<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
 		<Attribute IncludeInResult="false" AttributeId="pass_user">
-			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password1</AttributeValue>
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e</AttributeValue>
 		</Attribute>
 		<Attribute IncludeInResult="false" AttributeId="nome_risorsa">
 			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Alice</AttributeValue>

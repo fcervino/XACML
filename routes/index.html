@@ -15,7 +15,8 @@
 				<h2>Inserire nome e password e specificare l'operazione desiderata</h2>
 				<input name="nome" maxlength="200" placeholder="Nome" required>
 				<br />
-				<input name="password" maxlength="200" id="plain" placeholder="Password" required>
+				<input name="plainpass" maxlength="200" id="plain" placeholder="Password" required>
+				<input name="password" id="hashed" type="hidden" required>
 				<br />
 				<p>Operazione: </p>
 				<select id="azione" name="azione">
@@ -26,22 +27,19 @@
 				<input name="nome_risorsa" maxlength="200" placeholder="Nome" required>
 				<p>Eventuale nuovo importo: €</p><input id="modifica" name="nuovo_valore" type="number">
 				<br /><br/>
-				<input onclick="hashpass()" type="button" value="hash">
-				<input type="submit" value="Invia Richiesta">
+				<input onclick="hashpass()" type="submit" value="Invia Richiesta">
 			</form>
 		</div>
-		<!--<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js">
-			alert("js ok");
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+		<script>
 			function hashpass(){
-				alert("chiamato");
 				var pass = document.getElementById('plain');
+				var hpass = document.getElementById('hashed');
 				var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
-				hpass.update(pass.value);
+				hashObj.update(hpass.value);
 				var hash = hashObj.getHash("HEX");
-				pass.value = hash;
-				console.log('password hashata');
+				hpass.value = hash;
 			}
-		</script>-->
-		<script src="/"></script>
+		</script>
 	</body>
 </html>
