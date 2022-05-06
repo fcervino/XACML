@@ -3,11 +3,23 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const port = process.env.PORT || 80;
+//const port = process.env.PORT || 80;
+const port = process.env.PORT || 443;
+
+//var https = require('https');
+var fs = require('fs');
 
 var indexRouter = require('./routes/index');
 var visualizzaRouter = require('./routes/visualizza');
-var usersRouter = require('./routes/users');
+//var usersRouter = require('./routes/users');
+
+//certificato SSL
+/*var privateKey = fs.readFileSync('/etc/letsencrypt/live/soaseccervino.it/privkey.pem').toString();
+var certificate = fs.readFileSync('/etc/letsencrypt/live/soaseccervino.it/fullchain.pem').toString();
+var options = {
+	key : privateKey,
+	cert : certificate
+}*/
 
 var app = express();
 
@@ -41,8 +53,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(port, function(){
+console.log('Server in esecuzione sulla porta: ' + port);
+
+/*app.listen(port, function(){
 	console.log('Server in esecuzione sulla porta: ' + port);
-});
+});*/
 
 module.exports = app;

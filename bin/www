@@ -7,19 +7,27 @@
 var app = require('../app');
 var debug = require('debug')('soaseccervino:server');
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
+
+//Certificato SSL
+var options = {
+     key: fs.readFileSync('/etc/letsencrypt/live/soaseccervino.it/privkey.pem'),
+     cert: fs.readFileSync('/etc/letsencrypt/live/soaseccervino.it/fullchain.pem')
+}
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '443'); //prima c'era 3000
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 
-var server = http.createServer(app);
+var server = https.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.

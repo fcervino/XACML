@@ -257,7 +257,7 @@ router.post('/', function(req, res, next) {
 			esito = true;
 		}
 	});*/
-	esito = execSync("cd private;./authzforce-ce-core-pdp-cli-20.1.0.jar pdp.xml Request.xml 2>/dev/null").includes('Permit');
+	esito = execSync("cd ..;cd private;./authzforce-ce-core-pdp-cli-20.1.0.jar pdp.xml Request.xml 2>/dev/null").includes('Permit');
 
 	console.log('Decisione presa');
 
