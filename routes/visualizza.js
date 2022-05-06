@@ -110,7 +110,7 @@ router.post('/', function(req, res, next) {
 			xw.writeAttribute('AttributeId', 'ip_addr');
 				xw.startElement('AttributeValue');
 				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
-					xw.text(/*ipaddr*/'93.144.0.0'/*da togliere!!!!*/);
+					xw.text(ipaddr);
 				xw.endElement();
 			xw.endElement();
 			xw.startElement('Attribute');
@@ -214,7 +214,7 @@ router.post('/', function(req, res, next) {
 			xw.writeAttribute('AttributeId', 'orario');
 				xw.startElement('AttributeValue');
 				xw.writeAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
-					xw.text(/*time*/'12:00:00'/*DA TOGLIERE!!!*/);
+					xw.text(time);
 				xw.endElement();
 			xw.endElement();
 		xw.endElement();

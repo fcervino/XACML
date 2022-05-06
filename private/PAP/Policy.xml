@@ -61,16 +61,9 @@
 									DataType="http://www.w3.org/2001/XMLSchema#string"/>
 							</Apply>
 						</Apply>
-						<!--<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
-							<AttributeDesignator
-								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
-								AttributeId="orario"
-								MustBePresent="true"
-								DataType="http://www.w3.org/2001/XMLSchema#time"/>
-						</Apply>-->
 					</Apply>
 					<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-greater-than">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">18:00:00</AttributeValue>
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">19:30:00</AttributeValue>
 						<Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:time-from-string">
 							<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
 								<AttributeDesignator
@@ -80,13 +73,6 @@
 									DataType="http://www.w3.org/2001/XMLSchema#string"/>
 							</Apply>
 						</Apply>
-						<!--<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
-							<AttributeDesignator
-								Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
-								AttributeId="orario"
-								MustBePresent="true"
-								DataType="http://www.w3.org/2001/XMLSchema#time"/>
-						</Apply>-->
 					</Apply>
 				</Apply>
 			</Apply>
