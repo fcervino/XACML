@@ -41,4 +41,9 @@ Approfondimento dei flussi principali:
 
 # Valutazione della richiesta
 
-TBC...
+La richiesta viene formalizzata in un file (Request.xml) in modo che possa essere valutata dal PDP sulla base di ciò che prevede la politica di riferimento, formalizzata anch’essa nel file Policy.xml
+Il componente che si occupa di questo è un eseguibile in java che viene eseguito dal context handler utilizzando come argomenti i due file xml di cui sopra
+La risposta è anch’essa in xml e può essere:
+- Deny, nel caso in cui è stata violata almeno una regola contenuta nella politica
+- Permit, se sono state rispettate tutte le regole della politica
+- Not Applicable, se la politica non può essere applicata alla richiesta in esame (ovvero nel caso in cui il Nome del soggetto non risulta tra quelli dei dipendenti) - in questo caso la richiesta viene comunque rifiutata
